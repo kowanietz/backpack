@@ -45,7 +45,7 @@ void cmd_add(const char *path) {
     char dst[PATH_MAX] = {0};
     snprintf(dst, sizeof(dst), "%s/%s", backpack_dir, path);
 
-    if (copy_file(src, dst)) {
+    if (copy_file_or_dir(src, dst)) {
         printf("Added %s to backpack\n", path);
     } else {
         printf("Failed to add %s to backpack\n", path);
@@ -65,7 +65,7 @@ void cmd_cut(const char *path) {
     char dst[PATH_MAX] = {0};
     snprintf(dst, sizeof(dst), "%s/%s", backpack_dir, path);
 
-    if (copy_file(src, dst) && delete_file_or_dir(src)) {
+    if (copy_file_or_dir(src, dst) && delete_file_or_dir(src)) {
         printf("Moved %s to backpack\n", path);
     } else {
         printf("Failed to move %s to backpack\n", path);
@@ -85,7 +85,7 @@ void cmd_paste(const char *item) {
     char dst[PATH_MAX] = {0};
     get_abs_path(dst, item, sizeof(dst));
 
-    if (copy_file(src, dst)) {
+    if (copy_file_or_dir(src, dst)) {
         printf("Pasted %s from backpack\n", item);
     } else {
         printf("Failed to paste %s from backpack\n", item);
@@ -105,7 +105,7 @@ void cmd_pop(const char *item) {
     char dst[PATH_MAX] = {0};
     get_abs_path(dst, item, sizeof(dst));
 
-    if (copy_file(src, dst) && delete_file_or_dir(src)) {
+    if (copy_file_or_dir(src, dst) && delete_file_or_dir(src)) {
         printf("Moved %s from backpack\n", item);
     } else {
         printf("Failed to move %s from backpack\n", item);
